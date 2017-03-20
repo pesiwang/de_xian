@@ -1,0 +1,13 @@
+{
+    "client":{
+        "host":"0.0.0.0",
+        "port":7001,
+        "max_idle_time":60
+    },
+
+    "doctor":{
+        "host":"0.0.0.0",
+        "port":7002
+    }
+}
+
