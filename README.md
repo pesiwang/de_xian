@@ -1,2 +1,2 @@
 # dexian
-a group of games thatthe Hakkas play
+a group of games that the Hakkas play
