@@ -1,6 +1,11 @@
 #include "client_handler.h"
+#include "vcs/util/vc_codec.h"
+#include "common.h"
+#include "protobuf/package.pb.h"
+#include <string>
 
 using namespace vcs;
+using namespace std;
 
 void ClientHandler::onConnected(){
     log_debug("client connected, fd=%d", this->fd);
@@ -13,9 +18,86 @@ void ClientHandler::onClosed(){
 }
 
 void ClientHandler::onData(){
-    this->output->append(this->input);
-    this->input->shrink(this->input->size());
-    EventBase::instance()->write(this);
+    while(this->connected){
+        VCCodec::Package* p = VCCodec::decode(this->input);
+        if(p->status == VCCodec::PACKAGE_STATUS_PARTIAL){
+            delete p;
+            return ;
+        } else if(p->status == VCCodec::PACKAGE_STATUS_CORRUPT){
+            log_error("decode fail, data corrupt");
+            EventBase::instance()->remove(this);
+            delete p;
+            return ;
+        }
+
+        this->_process(p);
+        delete p;
+    }
 }
 
+void ClientHandler::_process(VCCodec::Package* p) {
+    log_debug("recv cmd from client, cmd=%d", p->head.cmd);
+    switch(p->head.cmd){
+        case C2S_LOGIN:
+            this->_processLogin(p);
+            break;
 
+        case C2S_LOGOUT:
+            this->_processLogout(p);
+            break;
+
+        case C2S_CREATE_ROOM:
+            this->_processCreateRoom(p);
+            break;
+
+        case C2S_QUIT_ROOM:
+            this->_processQuitRoom(p);
+            break;
+
+        case C2S_ENTER_ROOM:
+            this->_processEnterRoom(p);
+            break;
+
+        default:
+            log_error("recv unknown cmd from client, cmd=%d", p->head.cmd);
+            break;
+    }
+}
+
+void ClientHandler::_processLogin(VCCodec::Package* p) {
+    pb::c2s_login loginRequest;
+    if (!loginRequest.ParseFromString(p->body)) {
+        log_error("login fail, bad c2s_login package recv");
+        return;
+    }
+
+    uint32_t uid = loginRequest.uid();
+   
+    pb::s2c_login loginResponse;
+    loginResponse.set_result(0);
+    string body;
+    loginResponse.SerializeToString(&body);
+    Buffer* buffer  = VCCodec::encode(SERVER_VERSION, S2C_LOGIN, body);
+    this->output->append(buffer);
+    delete buffer;
+
+    EventBase::instance()->write(this);
+
+    log_debug("user %u login succ", uid);
+}
+
+void ClientHandler::_processLogout(VCCodec::Package* p) {
+
+}
+
+void ClientHandler::_processCreateRoom(VCCodec::Package* p) {
+
+}
+
+void ClientHandler::_processEnterRoom(VCCodec::Package* p) {
+
+}
+
+void ClientHandler::_processQuitRoom(VCCodec::Package* p) {
+
+}

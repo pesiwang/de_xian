@@ -1,6 +1,7 @@
 #include "vcs/event_base/event_base.h"
 #include "vcs/util/server_config.h"
 #include "vcs/doctor/server_doctor.h"
+#include "protobuf/package.pb.h"
 #include "client_listener.h"
 #include <string>
 
@@ -31,6 +32,8 @@ int main(int argc, char* argv[]) {
     EventBase::instance()->add(clientListener);
     log_info("client listener listen on %s:%d", clientHost.c_str(), clientPort);
 
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
     EventBase::instance()->dispatch();
+    google::protobuf::ShutdownProtobufLibrary();
 }
 

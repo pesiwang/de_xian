@@ -1,0 +1,36 @@
+package pb;
+
+message c2s_login {
+	required uint32 uid = 1;
+}
+
+message s2c_login {
+	required int32 result = 1;
+}
+
+message c2s_create_room {
+	required uint32 type = 1;
+}
+
+message s2c_create_room {
+	required int32 result = 1;
+	required uint32 room_num = 2;
+}
+
+message c2s_quit_room {
+	required uint32 room_num = 1;
+}
+
+message s2c_quit_room {
+	required int32 result = 1;
+}
+
+message c2s_enter_room {
+	required uint32 room_num = 1;
+}
+
+message s2c_enter_room {
+	required int32 result = 1;
+}
+
+
