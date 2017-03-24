@@ -27,7 +27,6 @@ void printHelp(){/*{{{*/
 	cout << "------------input cmd---------------------" << endl;
 	cout << "help: print this" << endl;
 	cout << "login: login to server" << endl;
-	cout << "logout: logout from the server" << endl;
 	cout << "create: create room" << endl;
 	cout << "join: join room" << endl;
 	cout << "quit: quit room" << endl;
@@ -69,10 +68,10 @@ void login(){/*{{{*/
 
 	cout << "login with uid " << uid << endl;
 
-    pb::c2s_login loginRequest;
-	loginRequest.set_uid(uid);
+    pb::c2s_login request;
+	request.set_uid(uid);
 	string str;
-	loginRequest.SerializeToString(&str);
+	request.SerializeToString(&str);
 	
     Buffer* writeBuffer = VCCodec::encode(SERVER_VERSION, C2S_LOGIN, str);
 	if(!Helper::Socket::write(g_fd, writeBuffer)){
@@ -95,9 +94,44 @@ void login(){/*{{{*/
         return ;
     }
 
-    pb::s2c_login loginResponse;
-	loginResponse.ParseFromString(p->body);
-	cout << "create result:" << loginResponse.result() << endl;
+    pb::s2c_login resp;
+	resp.ParseFromString(p->body);
+	cout << "login result:" << resp.result() << endl;
+}
+/*}}}*/
+
+void createRoom(){/*{{{*/
+	cout << "begin to create room" << endl;
+
+    pb::c2s_create_room request;
+	request.set_type(1);
+	string str;
+	request.SerializeToString(&str);
+	
+    Buffer* writeBuffer = VCCodec::encode(SERVER_VERSION, C2S_CREATE_ROOM, str);
+	if(!Helper::Socket::write(g_fd, writeBuffer)){
+		cout << "send fail" << endl;
+	} else {
+		cout << "send succ, begin to read" << endl;
+	}
+    delete writeBuffer;
+
+	Buffer readBuffer;
+	readResp(&readBuffer);
+    VCCodec::Package* p = VCCodec::decode(&readBuffer);
+    if(p->status == VCCodec::PACKAGE_STATUS_PARTIAL){
+        cout << "recv partial package" << endl;
+        delete p;
+        return ;
+    } else if(p->status == VCCodec::PACKAGE_STATUS_CORRUPT){
+        cout << "decode fail, data corrupt";
+        delete p;
+        return ;
+    }
+
+    pb::s2c_create_room resp;
+	resp.ParseFromString(p->body);
+	cout << "create result:" << resp.result() << ",room id:" << resp.room_id() << endl;
 }
 /*}}}*/
 
@@ -125,6 +159,7 @@ int main(int argc, char* argv[]){/*{{{*/
 			} else if(input.compare("login") == 0){
                 login();
 			} else if(input.compare("create") == 0){
+                createRoom();
 			} else if(input.compare("get") == 0){
 			} else if(input.compare("join") == 0){
 			} else if(input.compare("quit") == 0){

@@ -341,26 +341,26 @@ class s2c_create_room : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 result() const;
   inline void set_result(::google::protobuf::int32 value);
 
-  // required uint32 room_num = 2;
-  inline bool has_room_num() const;
-  inline void clear_room_num();
-  static const int kRoomNumFieldNumber = 2;
-  inline ::google::protobuf::uint32 room_num() const;
-  inline void set_room_num(::google::protobuf::uint32 value);
+  // required uint32 room_id = 2;
+  inline bool has_room_id() const;
+  inline void clear_room_id();
+  static const int kRoomIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 room_id() const;
+  inline void set_room_id(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:pb.s2c_create_room)
  private:
   inline void set_has_result();
   inline void clear_has_result();
-  inline void set_has_room_num();
-  inline void clear_has_room_num();
+  inline void set_has_room_id();
+  inline void clear_has_room_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::int32 result_;
-  ::google::protobuf::uint32 room_num_;
+  ::google::protobuf::uint32 room_id_;
   friend void  protobuf_AddDesc_package_2eproto();
   friend void protobuf_AssignDesc_package_2eproto();
   friend void protobuf_ShutdownFile_package_2eproto();
@@ -423,23 +423,23 @@ class c2s_quit_room : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 room_num = 1;
-  inline bool has_room_num() const;
-  inline void clear_room_num();
-  static const int kRoomNumFieldNumber = 1;
-  inline ::google::protobuf::uint32 room_num() const;
-  inline void set_room_num(::google::protobuf::uint32 value);
+  // required uint32 room_id = 1;
+  inline bool has_room_id() const;
+  inline void clear_room_id();
+  static const int kRoomIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 room_id() const;
+  inline void set_room_id(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:pb.c2s_quit_room)
  private:
-  inline void set_has_room_num();
-  inline void clear_has_room_num();
+  inline void set_has_room_id();
+  inline void clear_has_room_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 room_num_;
+  ::google::protobuf::uint32 room_id_;
   friend void  protobuf_AddDesc_package_2eproto();
   friend void protobuf_AssignDesc_package_2eproto();
   friend void protobuf_ShutdownFile_package_2eproto();
@@ -581,23 +581,23 @@ class c2s_enter_room : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 room_num = 1;
-  inline bool has_room_num() const;
-  inline void clear_room_num();
-  static const int kRoomNumFieldNumber = 1;
-  inline ::google::protobuf::uint32 room_num() const;
-  inline void set_room_num(::google::protobuf::uint32 value);
+  // required uint32 room_id = 1;
+  inline bool has_room_id() const;
+  inline void clear_room_id();
+  static const int kRoomIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 room_id() const;
+  inline void set_room_id(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:pb.c2s_enter_room)
  private:
-  inline void set_has_room_num();
-  inline void clear_has_room_num();
+  inline void set_has_room_id();
+  inline void clear_has_room_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 room_num_;
+  ::google::protobuf::uint32 room_id_;
   friend void  protobuf_AddDesc_package_2eproto();
   friend void protobuf_AssignDesc_package_2eproto();
   friend void protobuf_ShutdownFile_package_2eproto();
@@ -799,56 +799,56 @@ inline void s2c_create_room::set_result(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:pb.s2c_create_room.result)
 }
 
-// required uint32 room_num = 2;
-inline bool s2c_create_room::has_room_num() const {
+// required uint32 room_id = 2;
+inline bool s2c_create_room::has_room_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void s2c_create_room::set_has_room_num() {
+inline void s2c_create_room::set_has_room_id() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void s2c_create_room::clear_has_room_num() {
+inline void s2c_create_room::clear_has_room_id() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void s2c_create_room::clear_room_num() {
-  room_num_ = 0u;
-  clear_has_room_num();
+inline void s2c_create_room::clear_room_id() {
+  room_id_ = 0u;
+  clear_has_room_id();
 }
-inline ::google::protobuf::uint32 s2c_create_room::room_num() const {
-  // @@protoc_insertion_point(field_get:pb.s2c_create_room.room_num)
-  return room_num_;
+inline ::google::protobuf::uint32 s2c_create_room::room_id() const {
+  // @@protoc_insertion_point(field_get:pb.s2c_create_room.room_id)
+  return room_id_;
 }
-inline void s2c_create_room::set_room_num(::google::protobuf::uint32 value) {
-  set_has_room_num();
-  room_num_ = value;
-  // @@protoc_insertion_point(field_set:pb.s2c_create_room.room_num)
+inline void s2c_create_room::set_room_id(::google::protobuf::uint32 value) {
+  set_has_room_id();
+  room_id_ = value;
+  // @@protoc_insertion_point(field_set:pb.s2c_create_room.room_id)
 }
 
 // -------------------------------------------------------------------
 
 // c2s_quit_room
 
-// required uint32 room_num = 1;
-inline bool c2s_quit_room::has_room_num() const {
+// required uint32 room_id = 1;
+inline bool c2s_quit_room::has_room_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void c2s_quit_room::set_has_room_num() {
+inline void c2s_quit_room::set_has_room_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void c2s_quit_room::clear_has_room_num() {
+inline void c2s_quit_room::clear_has_room_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void c2s_quit_room::clear_room_num() {
-  room_num_ = 0u;
-  clear_has_room_num();
+inline void c2s_quit_room::clear_room_id() {
+  room_id_ = 0u;
+  clear_has_room_id();
 }
-inline ::google::protobuf::uint32 c2s_quit_room::room_num() const {
-  // @@protoc_insertion_point(field_get:pb.c2s_quit_room.room_num)
-  return room_num_;
+inline ::google::protobuf::uint32 c2s_quit_room::room_id() const {
+  // @@protoc_insertion_point(field_get:pb.c2s_quit_room.room_id)
+  return room_id_;
 }
-inline void c2s_quit_room::set_room_num(::google::protobuf::uint32 value) {
-  set_has_room_num();
-  room_num_ = value;
-  // @@protoc_insertion_point(field_set:pb.c2s_quit_room.room_num)
+inline void c2s_quit_room::set_room_id(::google::protobuf::uint32 value) {
+  set_has_room_id();
+  room_id_ = value;
+  // @@protoc_insertion_point(field_set:pb.c2s_quit_room.room_id)
 }
 
 // -------------------------------------------------------------------
@@ -883,28 +883,28 @@ inline void s2c_quit_room::set_result(::google::protobuf::int32 value) {
 
 // c2s_enter_room
 
-// required uint32 room_num = 1;
-inline bool c2s_enter_room::has_room_num() const {
+// required uint32 room_id = 1;
+inline bool c2s_enter_room::has_room_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void c2s_enter_room::set_has_room_num() {
+inline void c2s_enter_room::set_has_room_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void c2s_enter_room::clear_has_room_num() {
+inline void c2s_enter_room::clear_has_room_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void c2s_enter_room::clear_room_num() {
-  room_num_ = 0u;
-  clear_has_room_num();
+inline void c2s_enter_room::clear_room_id() {
+  room_id_ = 0u;
+  clear_has_room_id();
 }
-inline ::google::protobuf::uint32 c2s_enter_room::room_num() const {
-  // @@protoc_insertion_point(field_get:pb.c2s_enter_room.room_num)
-  return room_num_;
+inline ::google::protobuf::uint32 c2s_enter_room::room_id() const {
+  // @@protoc_insertion_point(field_get:pb.c2s_enter_room.room_id)
+  return room_id_;
 }
-inline void c2s_enter_room::set_room_num(::google::protobuf::uint32 value) {
-  set_has_room_num();
-  room_num_ = value;
-  // @@protoc_insertion_point(field_set:pb.c2s_enter_room.room_num)
+inline void c2s_enter_room::set_room_id(::google::protobuf::uint32 value) {
+  set_has_room_id();
+  room_id_ = value;
+  // @@protoc_insertion_point(field_set:pb.c2s_enter_room.room_id)
 }
 
 // -------------------------------------------------------------------

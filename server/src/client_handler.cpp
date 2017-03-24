@@ -3,6 +3,8 @@
 #include "common.h"
 #include "protobuf/package.pb.h"
 #include <string>
+#include "model/user_model.h"
+#include "model/room_model.h"
 
 using namespace vcs;
 using namespace std;
@@ -13,6 +15,7 @@ void ClientHandler::onConnected(){
 
 void ClientHandler::onClosed(){
     log_debug("client closed, fd=%d", this->fd);
+    UserModel::instance()->remove(this->m_uid);
 
     delete this;
 }
@@ -42,10 +45,6 @@ void ClientHandler::_process(VCCodec::Package* p) {
             this->_processLogin(p);
             break;
 
-        case C2S_LOGOUT:
-            this->_processLogout(p);
-            break;
-
         case C2S_CREATE_ROOM:
             this->_processCreateRoom(p);
             break;
@@ -67,31 +66,59 @@ void ClientHandler::_process(VCCodec::Package* p) {
 void ClientHandler::_processLogin(VCCodec::Package* p) {
     pb::c2s_login loginRequest;
     if (!loginRequest.ParseFromString(p->body)) {
-        log_error("login fail, bad c2s_login package recv");
+        log_error("login fail, bad c2s_login package");
         return;
     }
 
     uint32_t uid = loginRequest.uid();
-   
-    pb::s2c_login loginResponse;
-    loginResponse.set_result(0);
+    log_debug("user %u login", uid);
+
+    int ret = UserModel::instance()->add(uid);
+    if (ret != 0) {
+        log_error("login fail, add user fail, ret=%d", ret);
+        goto fail;
+    }
+    
+    m_uid = uid;
+fail:
+    pb::s2c_login resp;
+    resp.set_result(ret);
     string body;
-    loginResponse.SerializeToString(&body);
+    resp.SerializeToString(&body);
     Buffer* buffer  = VCCodec::encode(SERVER_VERSION, S2C_LOGIN, body);
     this->output->append(buffer);
     delete buffer;
 
     EventBase::instance()->write(this);
-
-    log_debug("user %u login succ", uid);
-}
-
-void ClientHandler::_processLogout(VCCodec::Package* p) {
-
 }
 
 void ClientHandler::_processCreateRoom(VCCodec::Package* p) {
+    log_debug("create room, uid=%u", this->m_uid);
 
+    pb::c2s_create_room createRoomRequest;
+    if (!createRoomRequest.ParseFromString(p->body)) {
+        log_error("create room fail, bad c2s_create_room package");
+        return;
+    }
+    
+    uint32_t type = createRoomRequest.type();
+    uint32_t roomId = 0;
+    int ret = RoomModel::instance()->createRoom(type, roomId);
+    if (ret != 0) {
+        goto fail;
+    }
+
+fail:
+    pb::s2c_create_room resp;
+    resp.set_result(ret);
+    resp.set_room_id(roomId);
+    string body;
+    resp.SerializeToString(&body);
+    Buffer* buffer  = VCCodec::encode(SERVER_VERSION, S2C_CREATE_ROOM, body);
+    this->output->append(buffer);
+    delete buffer;
+
+    EventBase::instance()->write(this);
 }
 
 void ClientHandler::_processEnterRoom(VCCodec::Package* p) {

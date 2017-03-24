@@ -14,11 +14,11 @@ message c2s_create_room {
 
 message s2c_create_room {
 	required int32 result = 1;
-	required uint32 room_num = 2;
+	required uint32 room_id = 2;
 }
 
 message c2s_quit_room {
-	required uint32 room_num = 1;
+	required uint32 room_id = 1;
 }
 
 message s2c_quit_room {
@@ -26,7 +26,7 @@ message s2c_quit_room {
 }
 
 message c2s_enter_room {
-	required uint32 room_num = 1;
+	required uint32 room_id = 1;
 }
 
 message s2c_enter_room {

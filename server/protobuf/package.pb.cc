@@ -102,7 +102,7 @@ void protobuf_AssignDesc_package_2eproto() {
   s2c_create_room_descriptor_ = file->message_type(3);
   static const int s2c_create_room_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(s2c_create_room, result_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(s2c_create_room, room_num_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(s2c_create_room, room_id_),
   };
   s2c_create_room_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -117,7 +117,7 @@ void protobuf_AssignDesc_package_2eproto() {
       sizeof(s2c_create_room));
   c2s_quit_room_descriptor_ = file->message_type(4);
   static const int c2s_quit_room_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(c2s_quit_room, room_num_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(c2s_quit_room, room_id_),
   };
   c2s_quit_room_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -147,7 +147,7 @@ void protobuf_AssignDesc_package_2eproto() {
       sizeof(s2c_quit_room));
   c2s_enter_room_descriptor_ = file->message_type(6);
   static const int c2s_enter_room_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(c2s_enter_room, room_num_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(c2s_enter_room, room_id_),
   };
   c2s_enter_room_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -235,12 +235,12 @@ void protobuf_AddDesc_package_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\rpackage.proto\022\002pb\"\030\n\tc2s_login\022\013\n\003uid\030"
     "\001 \002(\r\"\033\n\ts2c_login\022\016\n\006result\030\001 \002(\005\"\037\n\017c2"
-    "s_create_room\022\014\n\004type\030\001 \002(\r\"3\n\017s2c_creat"
-    "e_room\022\016\n\006result\030\001 \002(\005\022\020\n\010room_num\030\002 \002(\r"
-    "\"!\n\rc2s_quit_room\022\020\n\010room_num\030\001 \002(\r\"\037\n\rs"
-    "2c_quit_room\022\016\n\006result\030\001 \002(\005\"\"\n\016c2s_ente"
-    "r_room\022\020\n\010room_num\030\001 \002(\r\" \n\016s2c_enter_ro"
-    "om\022\016\n\006result\030\001 \002(\005", 298);
+    "s_create_room\022\014\n\004type\030\001 \002(\r\"2\n\017s2c_creat"
+    "e_room\022\016\n\006result\030\001 \002(\005\022\017\n\007room_id\030\002 \002(\r\""
+    " \n\rc2s_quit_room\022\017\n\007room_id\030\001 \002(\r\"\037\n\rs2c"
+    "_quit_room\022\016\n\006result\030\001 \002(\005\"!\n\016c2s_enter_"
+    "room\022\017\n\007room_id\030\001 \002(\r\" \n\016s2c_enter_room\022"
+    "\016\n\006result\030\001 \002(\005", 295);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "package.proto", &protobuf_RegisterTypes);
   c2s_login::default_instance_ = new c2s_login();
@@ -942,7 +942,7 @@ void c2s_create_room::Swap(c2s_create_room* other) {
 
 #ifndef _MSC_VER
 const int s2c_create_room::kResultFieldNumber;
-const int s2c_create_room::kRoomNumFieldNumber;
+const int s2c_create_room::kRoomIdFieldNumber;
 #endif  // !_MSC_VER
 
 s2c_create_room::s2c_create_room()
@@ -964,7 +964,7 @@ s2c_create_room::s2c_create_room(const s2c_create_room& from)
 void s2c_create_room::SharedCtor() {
   _cached_size_ = 0;
   result_ = 0;
-  room_num_ = 0u;
+  room_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1010,7 +1010,7 @@ void s2c_create_room::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(result_, room_num_);
+  ZR_(result_, room_id_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -1039,18 +1039,18 @@ bool s2c_create_room::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_room_num;
+        if (input->ExpectTag(16)) goto parse_room_id;
         break;
       }
 
-      // required uint32 room_num = 2;
+      // required uint32 room_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_room_num:
+         parse_room_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &room_num_)));
-          set_has_room_num();
+                 input, &room_id_)));
+          set_has_room_id();
         } else {
           goto handle_unusual;
         }
@@ -1088,9 +1088,9 @@ void s2c_create_room::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->result(), output);
   }
 
-  // required uint32 room_num = 2;
-  if (has_room_num()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->room_num(), output);
+  // required uint32 room_id = 2;
+  if (has_room_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->room_id(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1108,9 +1108,9 @@ void s2c_create_room::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->result(), target);
   }
 
-  // required uint32 room_num = 2;
-  if (has_room_num()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->room_num(), target);
+  // required uint32 room_id = 2;
+  if (has_room_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->room_id(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1132,11 +1132,11 @@ int s2c_create_room::ByteSize() const {
           this->result());
     }
 
-    // required uint32 room_num = 2;
-    if (has_room_num()) {
+    // required uint32 room_id = 2;
+    if (has_room_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->room_num());
+          this->room_id());
     }
 
   }
@@ -1169,8 +1169,8 @@ void s2c_create_room::MergeFrom(const s2c_create_room& from) {
     if (from.has_result()) {
       set_result(from.result());
     }
-    if (from.has_room_num()) {
-      set_room_num(from.room_num());
+    if (from.has_room_id()) {
+      set_room_id(from.room_id());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -1197,7 +1197,7 @@ bool s2c_create_room::IsInitialized() const {
 void s2c_create_room::Swap(s2c_create_room* other) {
   if (other != this) {
     std::swap(result_, other->result_);
-    std::swap(room_num_, other->room_num_);
+    std::swap(room_id_, other->room_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -1216,7 +1216,7 @@ void s2c_create_room::Swap(s2c_create_room* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int c2s_quit_room::kRoomNumFieldNumber;
+const int c2s_quit_room::kRoomIdFieldNumber;
 #endif  // !_MSC_VER
 
 c2s_quit_room::c2s_quit_room()
@@ -1237,7 +1237,7 @@ c2s_quit_room::c2s_quit_room(const c2s_quit_room& from)
 
 void c2s_quit_room::SharedCtor() {
   _cached_size_ = 0;
-  room_num_ = 0u;
+  room_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1273,7 +1273,7 @@ c2s_quit_room* c2s_quit_room::New() const {
 }
 
 void c2s_quit_room::Clear() {
-  room_num_ = 0u;
+  room_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -1288,13 +1288,13 @@ bool c2s_quit_room::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 room_num = 1;
+      // required uint32 room_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &room_num_)));
-          set_has_room_num();
+                 input, &room_id_)));
+          set_has_room_id();
         } else {
           goto handle_unusual;
         }
@@ -1327,9 +1327,9 @@ failure:
 void c2s_quit_room::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:pb.c2s_quit_room)
-  // required uint32 room_num = 1;
-  if (has_room_num()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->room_num(), output);
+  // required uint32 room_id = 1;
+  if (has_room_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->room_id(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1342,9 +1342,9 @@ void c2s_quit_room::SerializeWithCachedSizes(
 ::google::protobuf::uint8* c2s_quit_room::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:pb.c2s_quit_room)
-  // required uint32 room_num = 1;
-  if (has_room_num()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->room_num(), target);
+  // required uint32 room_id = 1;
+  if (has_room_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->room_id(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1359,11 +1359,11 @@ int c2s_quit_room::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 room_num = 1;
-    if (has_room_num()) {
+    // required uint32 room_id = 1;
+    if (has_room_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->room_num());
+          this->room_id());
     }
 
   }
@@ -1393,8 +1393,8 @@ void c2s_quit_room::MergeFrom(const ::google::protobuf::Message& from) {
 void c2s_quit_room::MergeFrom(const c2s_quit_room& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_room_num()) {
-      set_room_num(from.room_num());
+    if (from.has_room_id()) {
+      set_room_id(from.room_id());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -1420,7 +1420,7 @@ bool c2s_quit_room::IsInitialized() const {
 
 void c2s_quit_room::Swap(c2s_quit_room* other) {
   if (other != this) {
-    std::swap(room_num_, other->room_num_);
+    std::swap(room_id_, other->room_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -1662,7 +1662,7 @@ void s2c_quit_room::Swap(s2c_quit_room* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int c2s_enter_room::kRoomNumFieldNumber;
+const int c2s_enter_room::kRoomIdFieldNumber;
 #endif  // !_MSC_VER
 
 c2s_enter_room::c2s_enter_room()
@@ -1683,7 +1683,7 @@ c2s_enter_room::c2s_enter_room(const c2s_enter_room& from)
 
 void c2s_enter_room::SharedCtor() {
   _cached_size_ = 0;
-  room_num_ = 0u;
+  room_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1719,7 +1719,7 @@ c2s_enter_room* c2s_enter_room::New() const {
 }
 
 void c2s_enter_room::Clear() {
-  room_num_ = 0u;
+  room_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -1734,13 +1734,13 @@ bool c2s_enter_room::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 room_num = 1;
+      // required uint32 room_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &room_num_)));
-          set_has_room_num();
+                 input, &room_id_)));
+          set_has_room_id();
         } else {
           goto handle_unusual;
         }
@@ -1773,9 +1773,9 @@ failure:
 void c2s_enter_room::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:pb.c2s_enter_room)
-  // required uint32 room_num = 1;
-  if (has_room_num()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->room_num(), output);
+  // required uint32 room_id = 1;
+  if (has_room_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->room_id(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1788,9 +1788,9 @@ void c2s_enter_room::SerializeWithCachedSizes(
 ::google::protobuf::uint8* c2s_enter_room::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:pb.c2s_enter_room)
-  // required uint32 room_num = 1;
-  if (has_room_num()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->room_num(), target);
+  // required uint32 room_id = 1;
+  if (has_room_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->room_id(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1805,11 +1805,11 @@ int c2s_enter_room::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 room_num = 1;
-    if (has_room_num()) {
+    // required uint32 room_id = 1;
+    if (has_room_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->room_num());
+          this->room_id());
     }
 
   }
@@ -1839,8 +1839,8 @@ void c2s_enter_room::MergeFrom(const ::google::protobuf::Message& from) {
 void c2s_enter_room::MergeFrom(const c2s_enter_room& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_room_num()) {
-      set_room_num(from.room_num());
+    if (from.has_room_id()) {
+      set_room_id(from.room_id());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -1866,7 +1866,7 @@ bool c2s_enter_room::IsInitialized() const {
 
 void c2s_enter_room::Swap(c2s_enter_room* other) {
   if (other != this) {
-    std::swap(room_num_, other->room_num_);
+    std::swap(room_id_, other->room_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

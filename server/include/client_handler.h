@@ -14,10 +14,12 @@ public:
 private:
     void _process(VCCodec::Package* p);
     void _processLogin(VCCodec::Package* p);
-    void _processLogout(VCCodec::Package* p);
     void _processCreateRoom(VCCodec::Package* p);
     void _processEnterRoom(VCCodec::Package* p);
     void _processQuitRoom(VCCodec::Package* p);
+
+private:
+    uint32_t m_uid = 0;
 };
 
 #endif

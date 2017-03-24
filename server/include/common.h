@@ -8,7 +8,6 @@
 #define C2S_CREATE_ROOM     2
 #define C2S_ENTER_ROOM      3
 #define C2S_QUIT_ROOM       4
-#define C2S_LOGOUT          5
 
 
 #define S2C_LOGIN           101
