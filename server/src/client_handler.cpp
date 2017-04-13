@@ -103,11 +103,19 @@ void ClientHandler::_processCreateRoom(VCCodec::Package* p) {
     
     uint32_t type = createRoomRequest.type();
     uint32_t roomId = 0;
-    int ret = RoomModel::instance()->createRoom(type, roomId);
+    int ret = 0;
+
+    ret = RoomModel::instance()->createRoom(type, roomId);
     if (ret != 0) {
+    	log_error("create room fail, uid=%u, ret=%d", this->m_uid, ret);
         goto fail;
     }
 
+    ret = RoomModel::instance()->enterRoom(roomId, this->m_uid);
+    if (ret != 0) {
+    	log_error("enter room fail, uid=%u, ret=%d", this->m_uid, ret);
+        goto fail;
+    }
 fail:
     pb::s2c_create_room resp;
     resp.set_result(ret);
